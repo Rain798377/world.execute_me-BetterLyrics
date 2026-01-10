@@ -344,3 +344,6 @@ bc, ad = random_years()
 time_sec = time_to_travel(bc, ad, c)
 
 stimulation = "Stimulation : --- INITIATED---, Stimulation_status : True;, Stimulation : 100%"
+satisfaction = "Satisfaction : --- INITIATED---, Satisfaction_status : True;, Satisfaction : 100%"
+happiness = "Happiness : --- INITIATED---, Happiness_status : True;, Happiness : 100%"
+execution = "Execution : --- INITIATED ---, Emotions : ENABLED;"

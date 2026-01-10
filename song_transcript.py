@@ -3,6 +3,7 @@ from decorators import *
 from collections import deque
 from functions import *
 
+# format: {'text': str, 'start': float, 'duration': float, 'append': bool (optional), 'overwrite': bool (optional)}
 
 transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.64}, # 0
               {'text': 'Remember to put on', 'start': 1.74, 'duration': 1.18}, # 1
@@ -60,16 +61,20 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'give you all the', 'start': 61.22, 'duration': 0.738, 'append': True},
               {'text': 'STIMULATIONS', 'start': 61.958, 'duration': 0.631},
               {'text': 'Then I can', 'start': 62.589, 'duration': 0.946},
-              {'text': 'Then I can be your only', # fix timing
-                  'start': 63.535, 'duration': 1.862},
+              {'text': 'Then I can', 'start': 63.535, 'duration': 0.94, 'overwrite': True}, # 1.862
+              {'text': 'be your only', 'start': 64.475, 'duration': 0.922, 'append': True},
               {'text': 'SATISFACTION', 'start': 65.397, 'duration': 1.204},
-              {'text': 'If I can make you happy',
-                  'start': 66.601, 'duration': 1.651},
+              {'text': 'If', 'start': 66.601, 'duration': 0.599}, # 1.651
+              {'text': 'I can make you', 'start': 67.2, 'duration': 0.92, 'append': True},
+              {'text': 'HAPPY', 'start': 68.12, 'duration': 0.132},
               {'text': 'I will run the', 'start': 68.252, 'duration': 1.007},
               {'text': 'E X E C U T I O N', 'start': 69.259, 'duration': 0.825},
-              {'text': 'Though we are trapped', 'start': 70.084, 'duration': 1.68},
-              {'text': 'In this strange strange',
-                  'start': 71.764, 'duration': 1.405},
+              {'text': 'Though', 'start': 70.084, 'duration': 0.796}, # 1.68
+              {'text': 'we are', 'start': 70.88, 'duration': 0.47, 'append': True},
+              {'text': 'TRAPPED', 'start': 71.35, 'duration': 0.414},
+              {'text': 'In this', 'start': 71.764, 'duration': 0.516}, # 1.405
+              {'text': 'strange', 'start': 72.28, 'duration': 0.455},
+              {'text': 'strange', 'start': 72.735, 'duration': 0.434},
               {'text': 'S I M U L A T I O N',
                   'start': 73.169, 'duration': 0.876},
               {'text': "If I'm an eggplant", 'start': 74.045, 'duration': 1.377},
@@ -179,7 +184,7 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (prettyPrint, ("NewWorld : True;",), 12.729),
                           (prettyPrint, (f"Plotted points : {plotted_points}",), 30.65), # 29.710
                           (prettyPrint, (f"Dimension of set points : {dimension_set_points}",), 33.047), # 32.683
-                          (prettyPrint, (f"Plotted circle : {plotted_circle}",), 33.777), # 33.413
+                          (prettyPrint, (f"Plotted circle : {plotted_circle}",), 33.977), # 33.413
                           (prettyPrint, (f"Circumference : {circumference} cm",), 36.652), # 36.288
                           (prettyPrint, (f"Plotted sine wave : {plotted_sine_wave}",), 37.8315), # 37.068
                           (prettyPrint, (f"Tangents : {tangent_expr}",), 40.21325), # 40.049
@@ -187,14 +192,14 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (prettyPrint, (f"limit x --> {rand_limit}",), 43.9795), # 43.508
                           (">>> 'AC' successfully switched to 'DC'", 47.376), # 47.132
                           (prettyPrint, (f"Current date : {bc} BC\nTarget date : {ad} AD\nSpeed : {c:,} m/s\nEstimated time: {time_sec:.3f}",), 54.91), # 53.226
-                          (">>> Time travel successful", 54.95),
+                          (">>> Time travel successful.", 54.95),
                           (">>> Stimulation : True;", 62.274), # 61.959
                           (prettyPrint, (stimulation,), 62.374),
-                          (">>> Satisfaction : 100%", 65.398),
-                          (">>> Happiness : 100%", 66.602),
-                          (">>> Transfering nutrients...", 76.959),
-                          (">>> Transfering antioxidants...", 80.631),
-                          (">>> Providing enjoyment...", 84.269),
+                          (prettyPrint, (satisfaction), 65.999), # 65.398
+                          (prettyPrint, (happiness), 68.21), # 66.602
+                          (">>> NUTRIENTS_TRANSFERED", 76.959),
+                          (">>> ANTIOXIDANTS_TRANSFERED", 80.631),
+                          (">>> ENJOYMENT_PROVIDED", 84.269),
                           (">>> World.announce('I exist because of you.')", 87.923),
                           (">>> Gender successfully set to 'F'\n>>> Gender successfully set to 'M'", 90.198),
                           (Style.RED + ">>> ValueError: 'World.time_range' cannot be indefinite" +
@@ -202,7 +207,7 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (">>> Role successfully switched to 'S'\n>>> Role successfully switched to 'M'", 97.74),
                           (Style.RED + ">>> TypeError: expected 'float', but got 'None'" +
                            Style.RESET, 106.294),
-                          (Style.RED + ">>> PermissionError: [Errno 13] Permission denied: 'completion'" +
+                          (Style.RED + ">>> PermissionError: [Error 13] Permission denied: 'completion'" +
                            Style.RESET, 110.222),
                           (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" + Style.RESET, 111),
                           (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" +
@@ -262,7 +267,9 @@ functions_to_execute = deque([(lay_down, 3.874),
                               (simulation, 14),
                               (blind_my_vision, 48.2),
                               (united, 59.1),
-                              (trapped, 73.3),
+                              (emotions_Enabled, 69.89),
+                              (trapped, 73.25),
+                              (imtrapped, 73.35),
                               (god_is_always_true, 134),
                               (execute, 192.2),
                               ])

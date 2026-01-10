@@ -116,7 +116,16 @@ def united():
     computed1 = prettyPrint(f"computed : {computed}")
     print(united, computed1)
 
+def emotions_Enabled():
+    prettyPrint(execution)
+    prettyPrint(stimulation)
+    prettyPrint(satisfaction)
+    prettyPrint(happiness)
+    print(">>> EMOTIONS ENABLED")
 
+def imtrapped():
+    trapped = """Status : --- LOG ---,"I'm" entity trapped : True;, Simulation_status : ENABLED;"""
+    prettyPrint(trapped)
 
 def blind_my_vision():
     blind = Style.GREEN + """\033[32m
@@ -194,7 +203,8 @@ def execute():
                                                                                     
 
 ORIGINAL CODE BY ALIF BUDIMAN
-EDITED BY POSTIGIC
+FIXED BY POSTIGIC
+IMPROVED BY RAIN798377
 MUSIC BY MILI
                                                                          
   _   _                 _                           __                           _       _     _             _   __  
