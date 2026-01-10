@@ -1,24 +1,29 @@
 from utils import Style
 from decorators import *
 from collections import deque
+from functions import *
 
-transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.64},
-              {'text': 'Remember to put on', 'start': 1.74, 'duration': 1.18},
-              {'text': 'PROTECTION', 'start': 2.92, 'duration': 0.953},
-              {'text': 'Lay down your pieces', 'start': 3.873, 'duration': 1.618},
-              {'text': "And let's begin", 'start': 5.491, 'duration': 0.889},
+
+transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.64}, # 0
+              {'text': 'Remember to put on', 'start': 1.74, 'duration': 1.18}, # 1
+              {'text': 'PROTECTION', 'start': 2.92, 'duration': 0.953}, # 2
+              {'text': 'Lay down your pieces', 'start': 3.873, 'duration': 1.618}, # 3
+              {'text': "And let's begin", 'start': 5.491, 'duration': 0.889}, 
               {'text': 'OBJECT CREATION',
                   'start': 6.38, 'duration': 1.066},
-              {'text': 'Fill in my data parameters',
-                  'start': 7.446, 'duration': 2.645},
+              {'text': 'Fill in my data', # fix parameters timing. 9.220
+                  'start': 7.446, 'duration': 1.774},
+              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True},
               # {'text': 'INITIALIZATION', 'start': 10.091, 'duration': 1.004},
-              {'text': 'Set up our new world', 'start': 11.095, 'duration': 1.811},
+              {'text': 'Set up', 'start': 11.095, 'duration': 1.057}, 
+              {'text': 'our new world', 'start': 12.152, 'duration': 0.754, 'append': True},
               {'text': "And let's begin the", 'start': 12.906, 'duration': 0.985},
               {'text': 'S I M U L A T I O N',
                   'start': 13.891, 'duration': 0.997},
               # {'text': 'world.execute(me);', 'start': 16.0, 'duration': 7.08},
-              {'text': "If I'm a set of points",
-                  'start': 29.709, 'duration': 1.407},
+              {'text': "If", 'start': 29.709, 'duration': 0.896}, # 1.407
+              {'text': "I'm", 'start': 30.22, 'duration': 0.34, 'append': True},
+              {'text': 'a set of points', 'start': 30.56, 'duration': 0.171, 'append': True},
               {'text': 'Then I will give you my',
                   'start': 31.116, 'duration': 1.566},
               {'text': 'DIMENSION', 'start': 32.682, 'duration': 0.73},
@@ -34,22 +39,26 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'Then you can be my', 'start': 42.346, 'duration': 1.161},
               {'text': 'LIMITATIONS', 'start': 43.507, 'duration': 0.945},
               {'text': 'Switch my current', 'start': 44.452, 'duration': 1.398},
-              {'text': 'To AC to DC', 'start': 45.85, 'duration': 1.822},
+              {'text': 'To AC', 'start': 45.85, 'duration': 1.23},
+              {'text': 'to DC', 'start': 47.08, 'duration': 0.592, 'append': True},
               {'text': 'And then',
                   'start': 47.672, 'duration': 0.3724},
               {'text': 'my vision',
                   'start': 48.4168, 'duration': 0.3724},
-              {'text': 'So dizzy so dizzy', 'start': 49.534, 'duration': 1.829},
-              {'text': 'Oh we can travel', 'start': 51.363, 'duration': 1.862},
-              {'text': 'To A.D to B.C', 'start': 53.225, 'duration': 1.858},
+              {'text': 'So dizzy', 'start': 49.534, 'duration': 0.9145},
+              {'text': 'So dizzy', 'start': 50.4485, 'duration': 0.9145, 'append': True},
+              {'text': 'Oh', 'start': 51.363, 'duration': 1.285}, # 1.862
+              {'text': 'we can travel', 'start': 51.94, 'duration': 0.577, 'append': True},
+              {'text': 'To A.D', 'start': 53.225, 'duration': 1.285}, # 1.858
+              {'text': 'to B.C', 'start': 54.51, 'duration': 0.573, 'append': True},
               {'text': 'And we can unite', 'start': 55.083, 'duration': 1.833},
-              {'text': 'So deeply so deeply', 'start': 56.916, 'duration': 2.307},
+              {'text': 'So deeply so deeply', 'start': 56.916, 'duration': 2.307}, # fix timing
               {'text': 'If I can', 'start': 59.223, 'duration': 0.464},
-              {'text': 'If I can give you all the',
+              {'text': 'If I can give you all the', # fix timing
                   'start': 59.687, 'duration': 2.271},
               {'text': 'STIMULATIONS', 'start': 61.958, 'duration': 0.631},
               {'text': 'Then I can', 'start': 62.589, 'duration': 0.946},
-              {'text': 'Then I can be your only',
+              {'text': 'Then I can be your only', # fix timing
                   'start': 63.535, 'duration': 1.862},
               {'text': 'SATISFACTION', 'start': 65.397, 'duration': 1.204},
               {'text': 'If I can make you happy',
@@ -159,20 +168,24 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'LO-O-OVE', 'start': 191.356, 'duration': 0.804},
               {'text': 'EXECUTION', 'start': 205.811, 'duration': 1.249}]
 
-print_statements = deque([(">>> Powerline : ON", 0.11),
-                          (">>> Protection protocol enabled", 2.93),
-                          (">>> Objects(me, you) created", 6.39),
-                          (">>> New world successfully set up", 11.096),
-                          (">>> Plotted points : (1.6, 2.7), (-1.8, 2.9), (1.8, 3.5)", 29.710),
-                          (">>> Dimension of set points : (-1.8, 1.8), (2.7, 3.5)", 32.683),
-                          (">>> Plotted circle : (x - 4)**2 + (y + 1.5)**2 = 2.7**2", 33.413),
-                          (">>> Circumference : 10.3243269772 cm", 36.288),
-                          (">>> Plotted sine wave : y = 1.1 * sin(5x - 1.2) + 0.3", 37.068),
-                          (">>> Tangents : dy/dx = 1.1 * cos(5x - 1.2) * 5", 40.049),
-                          (">>> x --> inf", 40.707),
-                          (">>> lim x --> 100", 43.508),
-                          (">>> 'AC' successfully switched to 'DC'", 45.86),
-                          (">>> Current date : 607 BC\n>>> Target date : 2066 AD\n>>> Speed : 2,529,620,290,667,462,400 m/s\n>>> Estimated time: 10 s", 53.225),
+
+print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
+                          (">>> Protection protocol enabled", 3.47), # 2.93
+                          (prettyPrint, ("Protection : True;",), 3.67),
+                          (">>> Objects(me, you) created", 6.913), # 6.39
+                          (">>> New world successfully set up", 12.529), # 11.096
+                          (prettyPrint, ("NewWorld : True;",), 12.729),
+                          (prettyPrint, (f"Plotted points : {plotted_points}",), 30.65), # 29.710
+                          (prettyPrint, (f"Dimension of set points : {dimension_set_points}",), 33.047), # 32.683
+                          (prettyPrint, (f"Plotted circle : {plotted_circle}",), 33.777), # 33.413
+                          (prettyPrint, (f"Circumference : {circumference} cm",), 36.652), # 36.288
+                          (prettyPrint, (f"Plotted sine wave : {plotted_sine_wave}",), 37.8315), # 37.068
+                          (prettyPrint, (f"Tangents : {tangent_expr}",), 40.21325), # 40.049
+                          (prettyPrint, ("x --> infinity",), 41.526), #40.706
+                          (prettyPrint, (f"limit x --> {rand_limit}",), 43.9795), # 43.508
+                          (">>> 'AC' successfully switched to 'DC'", 47.376), # 47.132
+                          (prettyPrint, (f"Current date : {bc} BC\nTarget date : {ad} AD\nSpeed : {c:,} m/s\nEstimated time: {time_sec:.3f}",), 54.91), # 53.226
+                          (">>> Time travel successful", 54.95),
                           (">>> Stimulation : 100%", 61.959),
                           (">>> Satisfaction : 100%", 65.398),
                           (">>> Happiness : 100%", 66.602),
@@ -250,12 +263,14 @@ functions_to_execute = deque([(lay_down, 3.874),
                               (execute, 192.2),
                               ])
 
-indices_styles = {
-    2: Style.RED_BOLD,
-    5: Style.GREEN_BOLD,
-    6: Style.GREEN,
-    7: Style.GREEN,
-    9: Style.GREEN_BOLD,
+indices_styles = { # fix later.
+    2: Style.RED_BOLD, # PROTECTION
+    5: Style.GREEN_BOLD, # OBJECT CREATION
+    6: Style.GREEN, # fill in my data
+    7: Style.GREEN, # parameters
+    8: Style.GREEN, # set up
+    9: Style.GREEN, # our new world
+    11: Style.GREEN_BOLD,
     12: Style.YELLOW_BOLD,
     15: Style.YELLOW_BOLD,
     18: Style.YELLOW_BOLD,
