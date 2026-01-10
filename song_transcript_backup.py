@@ -1,0 +1,328 @@
+from utils import Style
+from decorators import *
+from collections import deque
+
+transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.64},
+              {'text': 'Remember to put on', 'start': 1.74, 'duration': 1.18},
+              {'text': 'PROTECTION', 'start': 2.92, 'duration': 0.953},
+              {'text': 'Lay down your pieces', 'start': 3.873, 'duration': 1.618},
+              {'text': "And let's begin", 'start': 5.491, 'duration': 0.889},
+              {'text': 'OBJECT CREATION',
+                  'start': 6.38, 'duration': 1.066},
+              {'text': 'Fill in my data parameters', # fix parameters timing. 9.220
+                  'start': 7.446, 'duration': 2.645},
+              # {'text': 'INITIALIZATION', 'start': 10.091, 'duration': 1.004},
+              {'text': 'Set up our new world', 'start': 11.095, 'duration': 1.811},
+              {'text': "And let's begin the", 'start': 12.906, 'duration': 0.985},
+              {'text': 'S I M U L A T I O N',
+                  'start': 13.891, 'duration': 0.997},
+              # {'text': 'world.execute(me);', 'start': 16.0, 'duration': 7.08},
+              {'text': "If I'm a set of points",
+                  'start': 29.709, 'duration': 1.407},
+              {'text': 'Then I will give you my',
+                  'start': 31.116, 'duration': 1.566},
+              {'text': 'DIMENSION', 'start': 32.682, 'duration': 0.73},
+              {'text': "If I'm a circle", 'start': 33.412, 'duration': 1.234},
+              {'text': 'Then I will give you my',
+                  'start': 34.646, 'duration': 1.641},
+              {'text': 'CIRCUMFERENCE', 'start': 36.287, 'duration': 0.78},
+              {'text': 'If I’m a sine wave', 'start': 37.067, 'duration': 1.529},
+              {'text': 'Then you can sit on all my',
+                  'start': 38.596, 'duration': 1.453},
+              {'text': 'TANGENTS', 'start': 40.049, 'duration': 0.657},
+              {'text': 'If I approach infinity', 'start': 40.706, 'duration': 1.64},
+              {'text': 'Then you can be my', 'start': 42.346, 'duration': 1.161},
+              {'text': 'LIMITATIONS', 'start': 43.507, 'duration': 0.945},
+              {'text': 'Switch my current', 'start': 44.452, 'duration': 1.398},
+              {'text': 'To AC to DC', 'start': 45.85, 'duration': 1.822},
+              {'text': 'And then',
+                  'start': 47.672, 'duration': 0.3724},
+              {'text': 'my vision',
+                  'start': 48.4168, 'duration': 0.3724},
+              {'text': 'So dizzy', 'start': 49.534, 'duration': 0.9145},
+              {'text': 'So dizzy', 'start': 50.4485, 'duration': 0.9145},
+              {'text': 'Oh we can travel', 'start': 51.363, 'duration': 1.862},
+              {'text': 'To A.D to B.C', 'start': 53.225, 'duration': 1.858}, # fix timing
+              {'text': 'And we can unite', 'start': 55.083, 'duration': 1.833},
+              {'text': 'So deeply so deeply', 'start': 56.916, 'duration': 2.307}, # fix timing
+              {'text': 'If I can', 'start': 59.223, 'duration': 0.464},
+              {'text': 'If I can give you all the', # fix timing
+                  'start': 59.687, 'duration': 2.271},
+              {'text': 'STIMULATIONS', 'start': 61.958, 'duration': 0.631},
+              {'text': 'Then I can', 'start': 62.589, 'duration': 0.946},
+              {'text': 'Then I can be your only', # fix timing
+                  'start': 63.535, 'duration': 1.862},
+              {'text': 'SATISFACTION', 'start': 65.397, 'duration': 1.204},
+              {'text': 'If I can make you happy',
+                  'start': 66.601, 'duration': 1.651},
+              {'text': 'I will run the', 'start': 68.252, 'duration': 1.007},
+              {'text': 'E X E C U T I O N', 'start': 69.259, 'duration': 0.825},
+              {'text': 'Though we are trapped', 'start': 70.084, 'duration': 1.68},
+              {'text': 'In this strange strange',
+                  'start': 71.764, 'duration': 1.405},
+              {'text': 'S I M U L A T I O N',
+                  'start': 73.169, 'duration': 0.876},
+              {'text': "If I'm an eggplant", 'start': 74.045, 'duration': 1.377},
+              {'text': 'Then I will give you my',
+                  'start': 75.422, 'duration': 1.537},
+              {'text': 'NUTRIENTS', 'start': 76.959, 'duration': 0.617},
+              {'text': "If I'm a tomato", 'start': 77.576, 'duration': 1.65},
+              {'text': 'Then I will give you', 'start': 79.226, 'duration': 1.394},
+              {'text': 'ANTIOXIDANTS', 'start': 80.62, 'duration': 0.731},
+              {'text': "If I'm a tabby cat", 'start': 81.351, 'duration': 1.482},
+              {'text': 'Then I will purr for your',
+                  'start': 82.833, 'duration': 1.435},
+              {'text': 'ENJOYMENT', 'start': 84.268, 'duration': 0.81},
+              {'text': 'If I’m the only god', 'start': 85.078, 'duration': 1.46},
+              {'text': "Then you're the proof of my",
+                  'start': 86.538, 'duration': 1.384},
+              {'text': 'EXISTENCE', 'start': 87.922, 'duration': 0.665},
+              {'text': 'Switch my gender', 'start': 88.587, 'duration': 1.61},
+              {'text': 'To F to M', 'start': 90.197, 'duration': 1.818},
+              {'text': 'And then do whatever', 'start': 92.015, 'duration': 1.938},
+              {'text': 'From AM to PM', 'start': 93.953, 'duration': 1.512},
+              {'text': 'Oh switch my role', 'start': 95.465, 'duration': 2.274},
+              {'text': 'To S to M', 'start': 97.739, 'duration': 1.61},
+              {'text': 'So we can enter', 'start': 99.349, 'duration': 2.125},
+              {'text': 'The trance the trance', 'start': 101.474, 'duration': 2.015},
+              {'text': 'If I can', 'start': 103.489, 'duration': 0.708},
+              {'text': 'If I can feel your', 'start': 104.197, 'duration': 2.096},
+              {'text': 'VIBRATIONS', 'start': 106.293, 'duration': 0.927},
+              {'text': 'Then I can', 'start': 107.22, 'duration': 0.683},
+              {'text': 'Then I can finally be', 'start': 107.903, 'duration': 2.318},
+              {'text': 'C O M P L E T I O N', 'start': 110.221, 'duration': 0.679},
+              {'text': 'Though you have left', 'start': 110.9, 'duration': 1.22},
+              {'text': 'You have left', 'start': 112.22, 'duration': 0.8},
+              {'text': 'You have left', 'start': 113.1, 'duration': 0.96},
+              {'text': 'You have left', 'start': 114.18, 'duration': 0.66},
+              {'text': 'You have left', 'start': 114.92, 'duration': 0.76},
+              {'text': 'You have left me in', 'start': 115.78, 'duration': 1.46},
+              {'text': 'I S O L A T I O N', 'start': 117.274, 'duration': 1.059},
+              {'text': 'If I can', 'start': 118.333, 'duration': 0.646},
+              {'text': 'If I can erase all the pointless',
+                  'start': 118.979, 'duration': 1.881},
+              {'text': 'FRAGMENTS', 'start': 120.86, 'duration': 0.868},
+              {'text': 'Then maybe', 'start': 121.728, 'duration': 0.986},
+              {'text': "Then maybe you won't leave me so",
+                  'start': 122.714, 'duration': 2.176},
+              {'text': 'DISHEARTENED', 'start': 124.89, 'duration': 0.818},
+              {'text': 'C h a l l e n g i n g   y o u r   g o d',
+                  'start': 125.708, 'duration': 2.953},
+              {'text': 'You have made some', 'start': 128.661, 'duration': 2.563},
+              {'text': 'ILLEGAL ARGUMENTS', 'start': 131.224, 'duration': 2.388},
+              {'text': 'EXECUTION', 'start': 147.66, 'duration': 0.9},
+              {'text': 'EXECUTION', 'start': 148.6, 'duration': 0.84},
+              {'text': 'EXECUTION', 'start': 149.52, 'duration': 0.94},
+              {'text': 'EXECUTION', 'start': 150.54, 'duration': 0.86},
+              {'text': 'EXECUTION', 'start': 151.52, 'duration': 0.66},
+              {'text': 'EXECUTION', 'start': 152.28, 'duration': 0.82},
+              {'text': 'EXECUTION', 'start': 153.16, 'duration': 0.74},
+              {'text': 'EXECUTION', 'start': 153.98, 'duration': 1.14},
+              {'text': 'EXECUTION', 'start': 155.2, 'duration': 0.82},
+              {'text': 'EXECUTION', 'start': 156.08, 'duration': 0.88},
+              {'text': 'EXECUTION', 'start': 157.04, 'duration': 0.88},
+              {'text': 'EXECUTION', 'start': 158.0, 'duration': 0.8},
+              {'text': 'EIN', 'start': 158.9, 'duration': 0.421},
+              {'text': 'DOS', 'start': 159.321, 'duration': 0.336},
+              {'text': 'TROIS', 'start': 159.657, 'duration': 0.587},
+              {'text': 'NE', 'start': 160.244, 'duration': 0.449},
+              {'text': 'FEM', 'start': 160.693, 'duration': 0.431},
+              {'text': 'LIU', 'start': 161.124, 'duration': 0.46},
+              {'text': 'E X E C U T I O N', 'start': 161.584, 'duration': 1.048},
+              {'text': 'If I can', 'start': 162.632, 'duration': 0.683},
+              {'text': 'If I can give them all the',
+                  'start': 163.315, 'duration': 1.851},
+              {'text': 'E X E C U T I O N', 'start': 165.166, 'duration': 0.85},
+              {'text': 'Then I can', 'start': 166.016, 'duration': 1.006},
+              {'text': 'Then I can be your only',
+                  'start': 167.022, 'duration': 1.889},
+              {'text': 'E X E C U T I O N', 'start': 168.911, 'duration': 0.913},
+              {'text': 'If I can have you back',
+                  'start': 169.824, 'duration': 2.044},
+              {'text': 'I will run the', 'start': 171.868, 'duration': 0.844},
+              {'text': 'E X E C U T I O N', 'start': 172.712, 'duration': 0.931},
+              {'text': 'Though we are trapped', 'start': 173.643, 'duration': 1.332},
+              {'text': 'We are trapped ah', 'start': 174.975, 'duration': 2.271},
+              {'text': "I've studied", 'start': 177.246, 'duration': 0.927},
+              {'text': "I've studied how to properly",
+                  'start': 178.173, 'duration': 1.756},
+              {'text': 'LO-O-OVE', 'start': 179.929, 'duration': 0.928},
+              {'text': 'Question me', 'start': 180.857, 'duration': 1.044},
+              {'text': 'Question me I can answer all',
+                  'start': 181.901, 'duration': 1.745},
+              {'text': 'LO-O-OVE', 'start': 183.646, 'duration': 0.894},
+              {'text': 'I know the algebraic expression of',
+                  'start': 184.54, 'duration': 3.125},
+              {'text': 'LO-O-OVE', 'start': 187.665, 'duration': 0.818},
+              {'text': 'Though you are free', 'start': 188.483, 'duration': 1.263},
+              {'text': 'I am trapped', 'start': 189.746, 'duration': 1.055},
+              {'text': 'Trapped in', 'start': 190.801, 'duration': 0.555},
+              {'text': 'LO-O-OVE', 'start': 191.356, 'duration': 0.804},
+              {'text': 'EXECUTION', 'start': 205.811, 'duration': 1.249}]
+
+print_statements = deque([(">>> Powerline : ON", 0.11),
+                          (">>> Protection protocol enabled", 2.93),
+                          (">>> Objects(me, you) created", 6.39),
+                          (">>> New world successfully set up", 11.096),
+                          (">>> Plotted points : (1.6, 2.7), (-1.8, 2.9), (1.8, 3.5)", 29.710),
+                          (">>> Dimension of set points : (-1.8, 1.8), (2.7, 3.5)", 32.683),
+                          (">>> Plotted circle : (x - 4)**2 + (y + 1.5)**2 = 2.7**2", 33.413),
+                          (">>> Circumference : 10.3243269772 cm", 36.288),
+                          (">>> Plotted sine wave : y = 1.1 * sin(5x - 1.2) + 0.3", 37.068),
+                          (">>> Tangents : dy/dx = 1.1 * cos(5x - 1.2) * 5", 40.049),
+                          (">>> x --> inf", 40.707),
+                          (">>> lim x --> 100", 43.508),
+                          (">>> 'AC' successfully switched to 'DC'", 45.86),
+                          (">>> Current date : 607 BC\n>>> Target date : 2066 AD\n>>> Speed : 2,529,620,290,667,462,400 m/s\n>>> Estimated time: 10 s", 53.225),
+                          (">>> Stimulation : 100%", 61.959),
+                          (">>> Satisfaction : 100%", 65.398),
+                          (">>> Happiness : 100%", 66.602),
+                          (">>> Transfering nutrients...", 76.959),
+                          (">>> Transfering antioxidants...", 80.631),
+                          (">>> Providing enjoyment...", 84.269),
+                          (">>> World.announce('I exist because of you.')", 87.923),
+                          (">>> Gender successfully set to 'F'\n>>> Gender successfully set to 'M'", 90.198),
+                          (Style.RED + ">>> ValueError: 'World.time_range' cannot be indefinite" +
+                           Style.RESET, 93.954),
+                          (">>> Role successfully switched to 'S'\n>>> Role successfully switched to 'M'", 97.74),
+                          (Style.RED + ">>> TypeError: expected 'float', but got 'None'" +
+                           Style.RESET, 106.294),
+                          (Style.RED + ">>> PermissionError: [Errno 13] Permission denied: 'completion'" +
+                           Style.RESET, 110.222),
+                          (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" + Style.RESET, 111),
+                          (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" +
+                           Style.RESET, 112.23),
+                          (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" + Style.RESET, 113.2),
+                          (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" +
+                           Style.RESET, 114.19),
+                          (Style.RED + ">>> AttributeError: 'World' object has no attribute 'you'" +
+                           Style.RESET, 114.93),
+                          (Style.RED + ">>> AttributeError: Cannot delete attribute 'memory'" +
+                           Style.RESET, 120.86),
+                          (Style.RED + ">>> AttributeError: Cannot delete attribute 'disheartened'" + Style.RESET, 124.9),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 147.67),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 148.61),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 149.53),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 150.55),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 151.53),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 152.29),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 153.17),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 153.99),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 155.21),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 156.09),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 157.05),
+                          (Style.BLUE + ">>> ResourceWarning: duplicate file executed" +
+                           Style.RESET, 158.01),
+                          (Style.RED + ">>> CriticalResourceWarning: multiple instances of duplicate file unclosed" + Style.RESET, 165.167),
+                          (Style.RED + ">>> DataReductionError: cannot reduce data" +
+                           Style.RESET, 168.912),
+                          (Style.RED + ">>> DataRecoveryError: cannot recover previous data" +
+                           Style.RESET, 169.825),
+                          (Style.BLUE + ">>> ResourceWarning: file opened but not called" +
+                           Style.RESET, 172.713),
+                          (">>> Attempting to find escape...", 173.644),
+                          (Style.RED + ">>> ScopeAccessError: cannot access data outside scope" +
+                           Style.RESET, 174.976),
+                          (Style.RED + ">>> CriticalResourceWarning: memory usage approaching limit" +
+                           Style.RESET, 179.93),
+                          (Style.BLUE + ">>> World.warn('I AM OMNISCIENT.')" +
+                           Style.RESET, 183.647),
+                          (Style.BLUE +
+                           ">>> World.warn('y = sqrt[1 - (|x| - 1)^2], arccos(1 - |x|) - π')" + Style.RESET, 187.666),
+                          (Style.RED + ">>> FatalMemoryError: memory exceeded, core dumped" + Style.RESET, 205.811)])
+
+functions_to_execute = deque([(lay_down, 3.874),
+                              (initialization, 10),
+                              (simulation, 14),
+                              (blind_my_vision, 48.2),
+                              (trapped, 73.3),
+                              (god_is_always_true, 134),
+                              (execute, 192.2),
+                              ])
+
+indices_styles = {
+    2: Style.RED_BOLD,  # PROTECTION
+    5: Style.GREEN_BOLD,  # OBJECT CREATION
+    6: Style.GREEN,  # Fill in my data parameters
+    7: Style.GREEN,  # Set up our new world
+    9: Style.GREEN_BOLD,  # S I M U L A T I O N
+    12: Style.YELLOW_BOLD,  # DIMENSION
+    15: Style.YELLOW_BOLD,  # CIRCUMFERENCE
+    18: Style.YELLOW_BOLD,  # TANGENTS
+    21: Style.YELLOW_BOLD,  # LIMITATIONS
+    22: Style.GREEN,  # Switch my current
+    23: Style.GREEN,  # To AC to DC
+    24: Style.GREEN,  # And then
+    25: Style.GREEN,  # my vision
+    27: Style.GREEN,  # So dizzy
+    28: Style.GREEN,  # Oh we can travel
+    31: Style.MAGENTA,  # So deeply so deeply
+    32: Style.MAGENTA,  # If I can
+    33: Style.YELLOW_BOLD,  # If I can give you all the
+    34: Style.MAGENTA,  # STIMULATIONS
+    35: Style.MAGENTA,  # Then I can
+    36: Style.YELLOW_BOLD,  # Then I can be your only
+    37: Style.GREEN,  # SATISFACTION
+    38: Style.GREEN,  # If I can make you happy
+    39: Style.YELLOW_BOLD,  # I will run the
+    42: Style.YELLOW_BOLD,  # In this strange strange
+    43: Style.GREEN,  # S I M U L A T I O N
+    44: Style.GREEN,  # If I'm an eggplant
+    45: Style.YELLOW_BOLD,  # Then I will give you my
+    46: Style.GREEN,  # NUTRIENTS
+    47: Style.GREEN,  # If I'm a tomato
+    48: Style.YELLOW_BOLD,  # Then I will give you
+    49: Style.GREEN,  # ANTIOXIDANTS
+    50: Style.GREEN,  # If I'm a tabby cat
+    51: Style.YELLOW_BOLD,  # Then I will purr for your
+    52: Style.GREEN,  # ENJOYMENT
+    53: Style.GREEN,  # If I�m the only god
+    54: Style.YELLOW_BOLD,  # Then you're the proof of my
+    55: Style.GREEN,  # EXISTENCE
+    56: Style.GREEN,  # Switch my gender
+    57: Style.GREEN,  # To F to M
+    58: Style.GREEN,  # And then do whatever
+    59: Style.GREEN,  # From AM to PM
+    60: Style.GREEN,  # Oh switch my role
+    61: Style.GREEN,  # To S to M
+    62: Style.GREEN,  # So we can enter
+    63: Style.MAGENTA,  # The trance the trance
+    64: Style.MAGENTA,  # If I can
+    65: Style.YELLOW_BOLD,  # If I can feel your
+    66: Style.BLUE,  # VIBRATIONS
+    67: Style.BLUE,  # Then I can
+    68: Style.BOLD,  # Then I can finally be
+    74: Style.RED_BOLD,  # You have left
+    75: Style.RED_BOLD,  # You have left me in
+    76: Style.MAGENTA,  # I S O L A T I O N
+    77: Style.MAGENTA,  # If I can
+    78: Style.YELLOW_BOLD,  # If I can erase all the pointless
+    79: Style.GREEN,  # FRAGMENTS
+    80: Style.GREEN,  # Then maybe
+    81: Style.YELLOW_BOLD,  # Then maybe you won't leave me so
+    82: Style.RED_BOLD,  # DISHEARTENED
+    83: Style.RED_BOLD,  # C h a l l e n g i n g   y o u r   g o d
+    84: Style.RED_BOLD,  # You have made some
+    103: Style.RED_BOLD,  # LIU
+    104: Style.MAGENTA,  # E X E C U T I O N
+    105: Style.MAGENTA,  # If I can
+    106: Style.YELLOW_BOLD,  # If I can give them all the
+    107: Style.BLUE,  # E X E C U T I O N
+    108: Style.BLUE,  # Then I can
+    109: Style.BOLD,  # Then I can be your only
+    110: Style.MAGENTA,  # E X E C U T I O N
+    111: Style.BLUE,  # If I can have you back
+    112: Style.BOLD,  # I will run the
+    126: Style.RED_BOLD,  # Trapped in
+}
