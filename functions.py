@@ -4,7 +4,6 @@ import sys
 import time
 import ast
 import math
-from Stimulation import stimulation
 
 # Tracks how many lines the last prettyPrint wrote (used for overwriting)
 _pretty_last_lines = 0
@@ -344,24 +343,4 @@ bc, ad = random_years()
 # Compute time at speed of light
 time_sec = time_to_travel(bc, ad, c)
 
-def stimulation():
-    percent = 0
-
-    while percent < 100:
-        percent += random.randint(1, 5)  # gradually rise
-        if percent > 99:                  # lock max at 99 before final print
-            percent = 99
-        # Print on the same line
-        prettyPrint(["--- INITIATED---", "Stimulation_status : True;", f"Stimulation : {percent}%"], label="Stimulation", overwrite=True)
-        time.sleep(0.05)
-        percent += 20
-
-# Final lock-in
-    stimulation = (
-        "Stimulation : --- INITIATED---, "
-        "Stimulation_status : True;, "
-        "Stimulation : 100%"
-    )
-    # Print the final block in the same multi-line labeled format
-    final_block = ["--- INITIATED---", "Stimulation_status : True;", "Stimulation : 100%"]
-    prettyPrint(final_block, label="Stimulation", overwrite=True)
+stimulation = "Stimulation : --- INITIATED---, Stimulation_status : True;, Stimulation : 100%"

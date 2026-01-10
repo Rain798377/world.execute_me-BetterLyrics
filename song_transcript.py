@@ -189,6 +189,7 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (prettyPrint, (f"Current date : {bc} BC\nTarget date : {ad} AD\nSpeed : {c:,} m/s\nEstimated time: {time_sec:.3f}",), 54.91), # 53.226
                           (">>> Time travel successful", 54.95),
                           (">>> Stimulation : True;", 62.274), # 61.959
+                          (prettyPrint, (stimulation,), 62.374),
                           (">>> Satisfaction : 100%", 65.398),
                           (">>> Happiness : 100%", 66.602),
                           (">>> Transfering nutrients...", 76.959),
@@ -261,7 +262,6 @@ functions_to_execute = deque([(lay_down, 3.874),
                               (simulation, 14),
                               (blind_my_vision, 48.2),
                               (united, 59.1),
-                              (stimulation, 62),
                               (trapped, 73.3),
                               (god_is_always_true, 134),
                               (execute, 192.2),
