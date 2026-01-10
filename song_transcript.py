@@ -46,16 +46,18 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'my vision',
                   'start': 48.4168, 'duration': 0.3724},
               {'text': 'So dizzy', 'start': 49.534, 'duration': 0.9145},
-              {'text': 'So dizzy', 'start': 50.4485, 'duration': 0.9145, 'append': True},
+              {'text': 'so dizzy', 'start': 50.4485, 'duration': 0.9145, 'append': True},
               {'text': 'Oh', 'start': 51.363, 'duration': 1.285}, # 1.862
               {'text': 'we can travel', 'start': 51.94, 'duration': 0.577, 'append': True},
               {'text': 'To A.D', 'start': 53.225, 'duration': 1.285}, # 1.858
               {'text': 'to B.C', 'start': 54.51, 'duration': 0.573, 'append': True},
-              {'text': 'And we can unite', 'start': 55.083, 'duration': 1.833},
-              {'text': 'So deeply so deeply', 'start': 56.916, 'duration': 2.307}, # fix timing
+              {'text': 'And we can', 'start': 55.083, 'duration': 1.497}, # 1.833
+              {'text': 'unite', 'start': 56.58, 'duration': 0.336, 'append': True},
+              {'text': 'So deeply', 'start': 56.916, 'duration': 1.1535}, # 2.307 1.1535
+              {'text': 'so deeply', 'start': 58.0695, 'duration': 1.1535, 'append': True},
               {'text': 'If I can', 'start': 59.223, 'duration': 0.464},
-              {'text': 'If I can give you all the', # fix timing
-                  'start': 59.687, 'duration': 2.271},
+              {'text': 'If I can', 'start': 59.687, 'duration': 1.533, 'overwrite': True}, # 2.271
+              {'text': 'give you all the', 'start': 61.22, 'duration': 0.738, 'append': True},
               {'text': 'STIMULATIONS', 'start': 61.958, 'duration': 0.631},
               {'text': 'Then I can', 'start': 62.589, 'duration': 0.946},
               {'text': 'Then I can be your only', # fix timing
@@ -186,7 +188,7 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (">>> 'AC' successfully switched to 'DC'", 47.376), # 47.132
                           (prettyPrint, (f"Current date : {bc} BC\nTarget date : {ad} AD\nSpeed : {c:,} m/s\nEstimated time: {time_sec:.3f}",), 54.91), # 53.226
                           (">>> Time travel successful", 54.95),
-                          (">>> Stimulation : 100%", 61.959),
+                          (">>> Stimulation : True;", 62.274), # 61.959
                           (">>> Satisfaction : 100%", 65.398),
                           (">>> Happiness : 100%", 66.602),
                           (">>> Transfering nutrients...", 76.959),
@@ -258,6 +260,8 @@ functions_to_execute = deque([(lay_down, 3.874),
                               (initialization, 10),
                               (simulation, 14),
                               (blind_my_vision, 48.2),
+                              (united, 59.1),
+                              (stimulation, 61.969),
                               (trapped, 73.3),
                               (god_is_always_true, 134),
                               (execute, 192.2),

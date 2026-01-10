@@ -1,19 +1,10 @@
+# python being dumb with imports
 import random
-import json
-import sys
 import time
+import json
 import ast
-import math
-from Stimulation import stimulation
 
-# Tracks how many lines the last prettyPrint wrote (used for overwriting)
-_pretty_last_lines = 0
-# The whole thing is messy but it works.
-# Function to pretty print JSON objects
-
-
-def prettyPrint(*args, label=None, live=False, overwrite=False):
-    
+def prettyPrint(*args):
     # Normalize input: support prettyPrint(obj) and prettyPrint(label, obj)
     if len(args) == 0:
         obj = ""
@@ -25,13 +16,6 @@ def prettyPrint(*args, label=None, live=False, overwrite=False):
         label = args[0]
         obj = args[1]
 
-    global _pretty_last_lines
-    if live:
-        # Single-line live print: overwrite same terminal line
-        print(obj, end='\r', flush=True)
-        _pretty_last_lines = 1
-        return
-    
     try:
         # If object is a compound type, serialize to JSON then extract inner
         if isinstance(obj, (dict, list, tuple, set)):
@@ -60,17 +44,11 @@ def prettyPrint(*args, label=None, live=False, overwrite=False):
                 else:
                     content = "    [\n" + inner_blocks + "\n    ]"
             else:
-                # If this is a plain list and a label is provided, print the
-                # label on its own line and place the bracketed list below it
-                # (keeps the bracket aligned with the label).
-                if isinstance(obj, list) and label:
-                    content = f"    {label}\n" + "\n".join("    " + line for line in lines)
+                # If a label is provided, print the label then the serialized block
+                if label:
+                    content = f"    {label} :\n" + "\n".join("        " + line for line in lines)
                 else:
-                    # If a label is provided for non-list types, keep existing format
-                    if label:
-                        content = f"    {label} :\n" + "\n".join("        " + line for line in lines)
-                    else:
-                        content = indented_lines
+                    content = indented_lines
 
         else:
             # Strings: try to detect label : value when obj is a string and no explicit label
@@ -223,145 +201,20 @@ def prettyPrint(*args, label=None, live=False, overwrite=False):
     except Exception:
         content = "    " + str(obj)
 
-    # Build the final block to print
-    final_block = "\n{\n" + content + "\n}" if content else "\n{\n}"
-
-    # Determine number of lines in the block
-    new_lines = len(final_block.splitlines())
-
-    # Overwrite previous printed block if requested and we have a previous block
-    if overwrite and _pretty_last_lines:
-        # If both previous and new are single-line, use carriage-return overwrite
-        if _pretty_last_lines == 1 and new_lines == 1:
-            print(final_block.strip(), end='\r', flush=True)
-            _pretty_last_lines = 1
-            return
-
-        # Move cursor up to the start of the previous block
-        try:
-            print(f"\033[{_pretty_last_lines}A", end='')
-        except Exception:
-            pass
-
-        # Print the new block
-        print(final_block)
-
-        # If new block is shorter than the previous, clear remaining lines
-        if new_lines < _pretty_last_lines:
-            for _ in range(_pretty_last_lines - new_lines):
-                print(' ' * 120)
-
-        _pretty_last_lines = new_lines
-        return
-
-    # Normal printing path (no overwrite requested)
-    print(final_block)
-    _pretty_last_lines = new_lines
-
-# Generate plotted points
-plotted_points = ", ".join(f"x={round(random.uniform(-2, 4),1)}, y={round(random.uniform(-2, 4),1)}" for _ in range(3))
-
-# Generate 2 random dimension set points
-dimension_set_points = ", ".join(f"x={round(random.uniform(-2, 2),1)}, y={round(random.uniform(2, 4),1)}" for _ in range(2))
-
-# Circle parameters
-cx = round(random.uniform(2, 6),1)
-cy = round(random.uniform(0, 3),1)
-r = round(random.uniform(2, 4),1)
-plotted_circle = f"x_center = {cx}, y_center = {cy}, radius = {r}, equation = (x - {cx})**2 + (y - {cy})**2 = {r}**2"
-circumference = round(2 * 3.14159265359 * r, 10)
-
-# Sine wave
-amplitude = round(random.uniform(0.5, 2.0),1)
-frequency = round(random.uniform(0.5, 2.0),1)
-phase_shift = round(random.uniform(0, 3.14),2)
-plotted_sine_wave = f"y = {amplitude} * sin({frequency} * x + {phase_shift}), amplitude = {amplitude}, frequency = {frequency}, phase_shift = {phase_shift}"
-
-# Tangent expression
-tangent_amplitude = round(random.uniform(0.5, 2.0),2)
-tangent_frequency = round(random.uniform(1, 6),2)
-tangent_phase = round(random.uniform(-3, 3),2)
-tangent_expr = f"dy/dx = {tangent_amplitude} * cos({tangent_frequency}x {tangent_phase:+}) * {tangent_frequency}, amplitude = {tangent_amplitude}, frequency = {tangent_frequency}, phase = {tangent_phase}"
-
-# Tangent (derivative-like) callable
-tangent = lambda x: tangent_amplitude * tangent_frequency * math.cos(
-    tangent_frequency * x + tangent_phase
-)
-
-
-# Compute derived values for the generated shapes/functions
-circle_area = math.pi * r * r
-# Choose a point on the circle at angle 0 (to the right of center) and verify equation
-point_on_circle = (round(cx + r, 6), round(cy, 6))
-circle_eq_value = (point_on_circle[0] - cx) ** 2 + (point_on_circle[1] - cy) ** 2
-
-# Define sine function and sample both sine and tangent at a few x values
-sine = lambda x: amplitude * math.sin(frequency * x + phase_shift)
-sample_xs = [0, 1, 2]
-sine_samples = {x: round(sine(x), 6) for x in sample_xs}
-tangent_samples = {x: round(tangent(x), 6) for x in sample_xs}
-
-computed = {
-    "circle_area": round(circle_area, 6),
-    "circumference": circumference,
-    "point_on_circle": point_on_circle,
-    "circle_eq_value": round(circle_eq_value, 6),
-    "plotted_circle": plotted_circle,
-    "plotted_sine_wave": plotted_sine_wave,
-    "tangent_expr": tangent_expr,
-    "sine_samples": sine_samples,
-    "tangent_samples": tangent_samples,
-}
-
-
-
-# random limit.
-rand_limit = random.randint(100, 500)
-
-
-# Speed of light in meters per second
-c = 299_792_458  
-
-def random_years():
-    # Random BC year between 1000 BC and 1 BC
-    bc_year = random.randint(1, 1000)
-    # Random AD year between 1 AD and 3000 AD
-    ad_year = random.randint(1, 3000)
-    return bc_year, ad_year
-
-def time_to_travel(bc_year, ad_year, speed):
-    # Convert years to seconds assuming 1 year = 365.25 days
-    years_diff = ad_year + bc_year  # BC to AD crossing
-    seconds = years_diff * 365.25 * 24 * 60 * 60
-    # Distance = speed * time, so time = distance / speed
-    # Let's assume distance = years_diff in light-years converted to meters
-    # 1 light-year = speed_of_light * 1 year
-    distance_m = years_diff * c * 365.25 * 24 * 60 * 60
-    time_seconds = distance_m / speed
-    return time_seconds
-# Random years
-bc, ad = random_years()
-# Compute time at speed of light
-time_sec = time_to_travel(bc, ad, c)
+    if content:
+        print("\n{\n" + content + "\n}")
+    else:
+        print("\n{\n}")
 
 def stimulation():
     percent = 0
 
     while percent < 100:
-        percent += random.randint(1, 5)  # gradually rise
-        if percent > 99:                  # lock max at 99 before final print
-            percent = 99
-        # Print on the same line
-        prettyPrint(["--- INITIATED---", "Stimulation_status : True;", f"Stimulation : {percent}%"], label="Stimulation", overwrite=True)
-        time.sleep(0.05)
-        percent += 20
-
-# Final lock-in
-    stimulation = (
-        "Stimulation : --- INITIATED---, "
-        "Stimulation_status : True;, "
-        "Stimulation : 100%"
-    )
-    # Print the final block in the same multi-line labeled format
-    final_block = ["--- INITIATED---", "Stimulation_status : True;", "Stimulation : 100%"]
-    prettyPrint(final_block, label="Stimulation", overwrite=True)
+        percent = random.randint(70, 99)  # fluctuate below 100
+        stimulation = (
+            f"Stimulation : --- INITIATED---, "
+            f"Stimulation_status : True;, "
+            f"Stimulation : {percent}%"
+        )
+    prettyPrint(stimulation)
+    time.sleep(0.2)

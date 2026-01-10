@@ -2,7 +2,9 @@ import sys
 import time
 import os
 import itertools
+import random
 from utils import Style
+from functions import *
 
 
 def lay_down():
@@ -103,7 +105,16 @@ ________________________________________________________________________________
 
     os.system("cls")
 
+def united():
+    united1 = True
+    objectCreated = True
+    parameter = "INITIALIZED"
+    NewWorld = True
+    current = random.choice(["AC", "DC"])
 
+    united = prettyPrint(f"united : {united1};, objectCreated : {objectCreated}, parameter : {parameter}, NewWorld : {NewWorld}, current : {current}")
+    computed1 = prettyPrint(f"computed : {computed}")
+    print(united, computed1)
 
 
 
@@ -125,6 +136,7 @@ def blind_my_vision():
         \033[0m
         """ + Style.RESET
     print(blind)
+
 
 
 def trapped():

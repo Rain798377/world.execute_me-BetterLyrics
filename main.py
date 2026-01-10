@@ -1,8 +1,12 @@
 import pygame
 import time
+import os
 from song_transcript import *
 from utils import Style
 from pathlib import Path
+
+
+os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def calculate_print_speed(text: str, duration: float) -> float:
@@ -27,12 +31,11 @@ def print_lyrics(audio_file: str, styles: list) -> None:
     lyrics_to_print = []
     for index, lyric in enumerate(transcript):
         print_speed = calculate_print_speed(lyric["text"], lyric["duration"])
-        # support optional 'append' flag in transcript entries
-        # if 'append' is True, this lyric will be printed on the same line
-        # as the previous lyric (useful for staggered delays)
+        # support optional 'append' and 'overwrite' flags in transcript entries
         append_flag = lyric.get("append", False)
+        overwrite_flag = lyric.get("overwrite", False)
         lyrics_to_print.append(
-            (lyric["start"], lyric["text"], styles[index], print_speed, append_flag))
+            (lyric["start"], lyric["text"], styles[index], print_speed, append_flag, overwrite_flag))
 
     pygame.mixer.init()
     pygame.mixer.music.load(audio_file)
@@ -42,16 +45,34 @@ def print_lyrics(audio_file: str, styles: list) -> None:
     current_lyric_index = 0
     running = True
 
+    last_print_len = 0
     while running:
         current_lyric = transcript[current_lyric_index]
         start_time = current_lyric["start"]
         current_time = pygame.mixer.music.get_pos() / 1000
 
         if current_time >= start_time:
-            start_time, text, current_style, print_speed, append_flag = \
+            start_time, text, current_style, print_speed, append_flag, overwrite_flag = \
                 lyrics_to_print[current_lyric_index]
-            sep = " " if append_flag else "\n"
+            if overwrite_flag:
+                sep = "\r"
+            else:
+                sep = " " if append_flag else "\n"
+
             slow_print(f"{sep}{text}", print_speed, current_style)
+
+            # If we overwrote a previous (longer) line, clear remaining chars
+            printed_len = len(text) if not append_flag else (1 + len(text))
+            if overwrite_flag and last_print_len > printed_len:
+                print(" " * (last_print_len - printed_len), end="", flush=True)
+
+            # Update last printed length depending on separator
+            if sep == "\n":
+                last_print_len = 0
+            elif sep == " ":
+                last_print_len += printed_len
+            else:  # sep == '\r'
+                last_print_len = len(text)
             current_lyric_index += 1
         handle_visuals(current_time)
 
