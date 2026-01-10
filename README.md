@@ -1,2 +1,37 @@
-# world.execute_me-BetterLyrics
-Better lyrics of world.execute(me); made in python. Original corrected lyrics and files from: https://github.com/Postigic/code-dump-lmao/tree/main/Python/world_execute_me Original rep: https://github.com/alipbudiman/sustain-and-World.Execute-me-but-in-py3
+# world_execute_me
+
+hrrrggg grrr turned song into little funny program that sync lyric and audio and then funny yippee visuals!!!
+
+![image](./__project_image__/image.jpg)
+
+---
+
+little doodad that plays the song `world.execute(me);` by Mili  
+original idea by AlipDotPY  
+video link: <https://youtu.be/hNVqVtm_sKU>
+
+---
+
+## ⚙️ features
+
+- plays song
+- synced lyrics
+- funny visuals
+
+---
+
+## 🧰 requirements
+
+install with:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🚀 how to use
+
+```bash
+python -u main.py
+```
