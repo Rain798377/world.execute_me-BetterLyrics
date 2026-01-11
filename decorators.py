@@ -275,6 +275,28 @@ def trapped():
     """ + Style.RESET
     print(lock)
 
+def eggplant():
+    eggplant = Style.WHITE + """
+             =.        
+           :--=     
+         .+=-*=*    
+         .:%@@**    
+       +--%@@#*     
+     +:=@@@@@++     
+    *:#@@@@@++:     
+    %+@@@%*-++      
+    .@@%+--#+       
+    """ + Style.RESET
+    description = {
+        "Name": "Eggplant",
+        "foodType": "Vegetable",
+        "nutritionalValue": random.randint(20, 550),
+        "itemID": random.randint(1000000, 9999999),
+        "objectID": random.randint(100000, 999999),
+        "isRipe": random.choice([True, False]),
+    }
+    print(eggplant)
+    prettyPrint(description)
 
 def god_is_always_true():
     os.system("cls")
