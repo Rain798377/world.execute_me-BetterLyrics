@@ -13,12 +13,12 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'OBJECT CREATION', 'start': 6.38, 'duration': 1.066, 'scramble': True, 'scramble_time': 0.52},
               {'text': 'Fill in my data', # fix parameters timing. 9.220
                   'start': 7.446, 'duration': 1.774},
-              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True, 'scramble': True, 'scramble_time': 0.85},
+              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True, 'scramble': True, 'scramble_time': 0.82},
               # {'text': 'INITIALIZATION', 'start': 10.091, 'duration': 1.004},
               {'text': 'Set up', 'start': 11.095, 'duration': 1.057}, 
               {'text': 'our new world', 'start': 12.152, 'duration': 0.754, 'append': True},
               {'text': "And let's begin the", 'start': 12.906, 'duration': 0.985},
-              {'text': 'S I M U L A T I O N', 'start': 13.891, 'duration': 0.997, 'scramble': True, 'scramble_time': 0.990}, # scramble time matches duration so doesnt conflict
+              {'text': 'S I M U L A T I O N', 'start': 13.891, 'duration': 0.997, 'scramble': True, 'scramble_time': 0.950}, # scramble time matches duration so doesnt conflict
               # {'text': 'world.execute(me);', 'start': 16.0, 'duration': 7.08},
               {'text': "If", 'start': 29.709, 'duration': 0.896}, # 1.407
               {'text': "I'm", 'start': 30.22, 'duration': 0.34, 'append': True},
@@ -265,7 +265,7 @@ functions_to_execute = deque([(lay_down, 3.874),
                               (initialization, 10),
                               (ErrorTerminate, 10.5),
                               (newWorld, 12.829),
-                              (simulation, 14),
+                              (simulation, 14.888),
                               (ACDC, 47.13),
                               (blind_my_vision, 48.2),
                               (united, 59.1),

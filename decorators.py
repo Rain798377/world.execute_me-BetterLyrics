@@ -4,6 +4,7 @@ import os
 import itertools
 import random
 import string
+import math
 from utils import Style
 from functions import *
 
@@ -44,7 +45,7 @@ def initialization():
 
 
 def simulation():
-    time.sleep(0.5)
+    time.sleep(0.05)  # slight delay before starting
     #for char in Style.GREEN + "\n\n ***************************************** \n ":
     #    print(char, end="", flush=True)
     obj = Style.GREEN + """
@@ -82,7 +83,7 @@ ________________________________________________________________________________
     #    time.sleep(0.002)  # small typing effect
 
     total_steps = 69           # number of characters in the bar
-    total_duration = 13.7      # total time in seconds for progress 0->100%
+    total_duration = 29-14.888      # default total time in seconds for progress 0->100%
     step_delay = total_duration / total_steps
     refresh_rate = 0.02        # refresh speed (characters flicker)
 
