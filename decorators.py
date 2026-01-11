@@ -3,6 +3,7 @@ import time
 import os
 import itertools
 import random
+import string
 from utils import Style
 from functions import *
 
@@ -18,7 +19,7 @@ def lay_down():
             count += 1
     sys.stdout.flush()
     listy = ["ᛄ", "  ᛄ", "    ᛄ", "       ᛄ",
-             "          ᛄ", "                      ᛄ"]
+             "          ᛄ", "                                ᛄ"]
     count2 = 0
     for cc in itertools.cycle(listy):
         if count2 == len(listy):
@@ -31,8 +32,8 @@ def lay_down():
 
 
 def initialization():
-    listx = ["     ██ 39%", "     ███ 49%", "     ████ 76%", "     █████ 89%", "     ██████ 100%", "     ██████  INITIALIZATION", "     ██████  INITIALIZATION",
-             "     ██████  INITIALIZATION", "     ██████  INITIALIZATION", "     ██████  INITIALIZATION", "     ██████  INITIALIZATION", "     ██████  INITIALIZATION"]
+    listx = ["     ██ 39%", "     ███ 49%", "     ████ 76%", "     █████ 89%", "     ██████ 100%", "     ██████  INITIALIZATION          ", "     ██████  INITIALIZATION          ",
+             "     ██████  INITIALIZATION          ", "     ██████  INITIALIZATION          ", "     ██████  INITIALIZATION          ", "     ██████  INITIALIZATION          ", "     ██████  INITIALIZATION          "]
     count = 0
     for c in listx:
         if count != len(listx):
@@ -44,15 +45,17 @@ def initialization():
 
 def simulation():
     time.sleep(0.5)
-    for char in Style.GREEN + "\n\n ***************************************** \n ":
-        print(char, end="", flush=True)
-    obj = """
- _ _ _  _  ___ _    __    _____ _____ __  _ _  ___  ___   _ _   _  ___ _   
-| | | |/ \| o \ |  |  \  | __\ V / __/ _|| | ||_ _|| __| //| \_/ || __|\\  
-| V V ( o )   / |_ | o ) | _| ) (| _( (_ | U | | | | _| || | \_/ || _|  |()
- \_n_/ \_/|_|\\___||__() |___/_n_\___\__||___| |_| |___||| |_| |_||___| |()
-                                                         \\            //V 
-
+    #for char in Style.GREEN + "\n\n ***************************************** \n ":
+    #    print(char, end="", flush=True)
+    obj = Style.GREEN + """
+                     _     _                           _        __            __    
+                    | |   | |                         | |      / /            \ \ _ 
+ __      _____  _ __| | __| |  _____  _____  ___ _   _| |_ ___| |_ __ ___   ___| (_)
+ \ \ /\ / / _ \| '__| |/ _` | / _ \ \/ / _ \/ __| | | | __/ _ \ | '_ ` _ \ / _ \ |  
+  \ V  V / (_) | |  | | (_| ||  __/>  <  __/ (__| |_| | ||  __/ | | | | | |  __/ |_ 
+   \_/\_/ \___/|_|  |_|\__,_(_)___/_/\_\___|\___|\__,_|\__\___| |_| |_| |_|\___| ( )
+                                                               \_\            /_/|/ 
+                                                                                    
 ___________________________________________________________________________________________
 .    .    *  .   .  .   .  *     .  .        . .   .     .  *   .     .  .   .    *   .   .
 *  .    .    *  .     .         .    * .     .  *  .    .   .   *   . .    .    *   .  .
@@ -72,36 +75,52 @@ ____   *   .    .      .   .           .  .   .      .    : O. Oo;    .       . 
     '-.;        __,  `   _,-'-.--'''  \-:        `.   *   .    .  .   *     .   .  . . *
         )`-..---'   `---''              \ `.        . .   .  .       . .  .    * .   .   . 
 ___________________________________________________________________________________________ \n""" + Style.RESET
-    for char in obj:
-        print(char, end="", flush=True)
-    listx = [
-        "[                   ]   0%",
-        "[██                 ]   7%",
-        "[█████              ]  26%",
-        "[████████           ]  49%",
-        "[█████████████      ]  76%",
-        "[████████████████   ]  89%",
-        "[███████████████████] 100%",
-        "[███████████████████] LOADING DATA",
-        "[███████████████████] PREPARING OBJECTS",
-        "[███████████████████] INITIALIZING FUNCTIONS",
-        "[███████████████████] PROCESSING DATA",
-        "[███████████████████] COMPILING TO MAINFRAME",
-        "[███████████████████] ESTABLISHING SERVER CONNECTION...",
-        "[███████████████████] CONNECTION ESTABLISHED!",
-        "[███████████████████] world.execute(me);"
+
+    print(obj)
+    #for char in obj:
+    #    print(char, end="", flush=True)
+    #    time.sleep(0.002)  # small typing effect
+
+    total_steps = 69           # number of characters in the bar
+    total_duration = 13.7      # total time in seconds for progress 0->100%
+    step_delay = total_duration / total_steps
+    refresh_rate = 0.02        # refresh speed (characters flicker)
+
+    phrases = [ # same length for alignment
+        "Adding 'You' and 'Me'    ",
+        "Generating the Universe  ",
+        "Adding Stars and Moons.. ",
+        "Crafting the Narrative   "
     ]
+    ascii_chars = string.ascii_letters + string.digits + string.punctuation
 
-    line_length = 92
+    progress = 0
+    last_update = time.time()
+    current_phrase = random.choice(phrases)  # pick phrase for this step
 
-    for c in listx:
-        padding = line_length - len(c)
-        left_padding = padding // 2
-        right_padding = padding - left_padding
-        centered_c = " " * left_padding + c + " " * right_padding
-        sys.stdout.write('\r' + centered_c)
-        time.sleep(0.95)
+    while progress <= total_steps:
+        now = time.time()
+        # Increment progress every step_delay seconds
+        if now - last_update >= step_delay:
+            progress += 1
+            last_update = now
+            current_phrase = random.choice(phrases)  # update phrase only on progress step
+
+        # --- Build bar ---
+        # Only the filled portion flickers
+        filled = ''.join(random.choice(ascii_chars) for _ in range(progress))
+        empty = '-' * (total_steps - progress)
+        bar = filled + empty
+        percent = math.ceil(progress * 100 / total_steps)  # calculate once per step
+
+        sys.stdout.write(f"\r{current_phrase} [{bar}] {percent}%          ") # add spaces to clear line
         sys.stdout.flush()
+
+        # Refresh faster than progress increment for flicker effect
+        time.sleep(refresh_rate)
+
+
+    print("\n" + Style.GREEN + "world.execute(me);" + Style.RESET)
 
     os.system("cls")
 
@@ -123,9 +142,41 @@ def emotions_Enabled():
     prettyPrint(happiness)
     print(">>> EMOTIONS ENABLED")
 
-def imtrapped():
+def imtrapped(): # fallback function
     trapped = """Status : --- LOG ---,"I'm" entity trapped : True;, Simulation_status : ENABLED;"""
     prettyPrint(trapped)
+
+def entityTrapped(): # improved function fake error message
+    line_number1 = lambda: random.randint(10, 120) # Line Number
+    line_number_loop1 = random.randint(10, 120) # Line Number for loop
+    trapped = Style.RED + f"""
+Traceback (most recent call last):
+  File "world.py", line {line_number1()}, in execute
+    result = self.run(me)
+  File "world.py", line {line_number1()}, in run
+    return me.identity.resolve()
+  File "identity.py", line {line_number1()}, in resolve
+    raise IdentityError("Unable to release trapped 'I'm' from runtime context")
+identity.IdentityError: Unable to release trapped 'I'm' from runtime context
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "main.py", line {line_number1()}, in <module>
+    world.execute(me)
+  File "world.py", line {line_number1()}, in execute
+    self.loop(me)
+  File "world.py", line {line_number_loop1}, in loop
+    self.execute(me)
+  File "world.py", line {line_number_loop1}, in loop
+    self.execute(me)
+  File "world.py", line {line_number_loop1}, in loop
+    self.execute(me)
+RecursionError: maximum recursion depth exceeded while attempting to escape 'I'm'
+
+""" + Style.RESET
+    print(trapped)
+
 
 def blind_my_vision():
     blind = Style.GREEN + """\033[32m
@@ -146,10 +197,69 @@ def blind_my_vision():
         """ + Style.RESET
     print(blind)
 
+def newWorld():
+    x = random.randint(1000000000000000, 9999999999999999)
+    y = random.randint(-100, -20)
+    z = random.randint(20, 100)
+    newWorld = Style.WHITE + f"""
+    
+            ,-:` \;',`'-, 	   Welcome to Arcadia 
+          .'-;_,;  ':-;_,'.	------------------------
+         /;   '/    ,  _`.-\	Alternative Name: Terra
+        | '`. (`     /` ` \`|	IsLivable: True
+        |:.  `\`-.   \_   / |	Surface Temp: Min {y}'C | Max {z}'C
+        |     (   `,  .`\ ;'|	Rotational: 365 days
+         \     | .'     `-'/	Population: 2
+          `.   ;/        .'	Seed Key: {x}
+            `'-._____.
+        
+    """ + Style.RESET
+    print(newWorld)
+
+def ErrorTerminate():
+    filename = random.choice(["world_generator.py", "world_initiator.py", "world_simulator.py"]) # File Name
+    line_number = lambda: random.randint(10, 120) # Line Number
+    run = random.choice(["simulation_manager.run()", "Simulation.initiator()", "WorldGenerator.start()"]) # Function Call
+    driveLetter = chr(random.randint(ord('A'), ord('Z'))) # random drive letter
+    terminateWorld = random.choice(["terminate_world", "shutdown_simulation", "end_world_process"]) # Function Name
+    terminated = Style.RED + f"""
+Traceback (most recent call last):
+  File "{filename}", line {line_number()}, in <module>
+    {run}
+  File "{driveLetter}:\World\{run}", line {line_number()}, in {terminateWorld}
+    raise InvalidOperationException("Failed to terminate the Simulated World.")
+    __main__.InvalidOperationException: Failed to terminate the Simulated World.
+  No failsafes implemented for graceful termination. The termination process was unable to complete successfully due to the absence of failsafe mechanisms.
+    """ + Style.RESET
+    print(terminated)
+
+
+def ACDC():
+    ACDC = [
+        "Converting DC ---> AC",
+        "███                             10%   ",
+        "███████                         25%   ",
+        "███████████                     45%   ",
+        "███████████████                 65%   ",
+        "███████████████████             80%   ",
+        "█████████████████████           90%   ",
+        "███████████████████████         95%   ",
+        "█████████████████████████       98%   ",
+        "███████████████████████████     100%   ",
+        "---------------Converted AC to DC---------------",
+    ]
+# 0.542/11 = 0.0492 seconds per step approximately
+# Animate all except the last step
+    for step in ACDC[:-1]:
+        print(step, end='\r')
+        sys.stdout.flush()
+        time.sleep(0.04) # slightly faster so doesn't break rhythm.
+# Print the last line normally so it stays
+    print(ACDC[-1])
 
 
 def trapped():
-    lock = Style.YELLOW + """
+    lock = Style.RED + """
 
                                         
       ██████
@@ -204,7 +314,8 @@ def execute():
 
 ORIGINAL CODE BY ALIF BUDIMAN
 FIXED BY POSTIGIC
-IMPROVED BY RAIN798377
+IMPROVED BY RAIN
+DISCORD: @rain798377
 MUSIC BY MILI
                                                                          
   _   _                 _                           __                           _       _     _             _   __  

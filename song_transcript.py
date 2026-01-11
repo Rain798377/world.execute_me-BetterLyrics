@@ -7,20 +7,18 @@ from functions import *
 
 transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.64}, # 0
               {'text': 'Remember to put on', 'start': 1.74, 'duration': 1.18}, # 1
-              {'text': 'PROTECTION', 'start': 2.92, 'duration': 0.953}, # 2
+              {'text': 'PROTECTION', 'start': 2.92, 'duration': 0.953, 'scramble': True, 'scramble_time': 0.50}, # 2
               {'text': 'Lay down your pieces', 'start': 3.873, 'duration': 1.618}, # 3
               {'text': "And let's begin", 'start': 5.491, 'duration': 0.889}, 
-              {'text': 'OBJECT CREATION',
-                  'start': 6.38, 'duration': 1.066},
+              {'text': 'OBJECT CREATION', 'start': 6.38, 'duration': 1.066, 'scramble': True, 'scramble_time': 0.52},
               {'text': 'Fill in my data', # fix parameters timing. 9.220
                   'start': 7.446, 'duration': 1.774},
-              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True},
+              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True, 'scramble': True, 'scramble_time': 0.85},
               # {'text': 'INITIALIZATION', 'start': 10.091, 'duration': 1.004},
               {'text': 'Set up', 'start': 11.095, 'duration': 1.057}, 
               {'text': 'our new world', 'start': 12.152, 'duration': 0.754, 'append': True},
               {'text': "And let's begin the", 'start': 12.906, 'duration': 0.985},
-              {'text': 'S I M U L A T I O N',
-                  'start': 13.891, 'duration': 0.997},
+              {'text': 'S I M U L A T I O N', 'start': 13.891, 'duration': 0.997, 'scramble': True, 'scramble_time': 0.990}, # scramble time matches duration so doesnt conflict
               # {'text': 'world.execute(me);', 'start': 16.0, 'duration': 7.08},
               {'text': "If", 'start': 29.709, 'duration': 0.896}, # 1.407
               {'text': "I'm", 'start': 30.22, 'duration': 0.34, 'append': True},
@@ -40,7 +38,7 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'Then you can be my', 'start': 42.346, 'duration': 1.161},
               {'text': 'LIMITATIONS', 'start': 43.507, 'duration': 0.945},
               {'text': 'Switch my current', 'start': 44.452, 'duration': 1.398},
-              {'text': 'To AC', 'start': 45.85, 'duration': 1.23},
+              {'text': 'To AC', 'start': 45.85, 'duration': 1.23}, # 1.23+0.592 = 1.822
               {'text': 'to DC', 'start': 47.08, 'duration': 0.592, 'append': True},
               {'text': 'And then',
                   'start': 47.672, 'duration': 0.3724},
@@ -52,13 +50,14 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': 'we can travel', 'start': 51.94, 'duration': 0.577, 'append': True},
               {'text': 'To A.D', 'start': 53.225, 'duration': 1.285}, # 1.858
               {'text': 'to B.C', 'start': 54.51, 'duration': 0.573, 'append': True},
-              {'text': 'And we can', 'start': 55.083, 'duration': 1.497}, # 1.833
-              {'text': 'unite', 'start': 56.58, 'duration': 0.336, 'append': True},
+              {'text': 'And we can', 'start': 55.083, 'duration': 1.494}, # 1.833
+              {'text': 'unite', 'start': 56.55, 'duration': 0.339, 'append': True},
               {'text': 'So deeply', 'start': 56.916, 'duration': 1.1535}, # 2.307 1.1535
               {'text': 'so deeply', 'start': 58.0695, 'duration': 1.1535, 'append': True},
               {'text': 'If I can', 'start': 59.223, 'duration': 0.464},
               {'text': 'If I can', 'start': 59.687, 'duration': 1.533, 'overwrite': True}, # 2.271
-              {'text': 'give you all the', 'start': 61.22, 'duration': 0.738, 'append': True},
+              {'text': 'give you', 'start': 61.22, 'duration': 0.44, 'append': True},
+              {'text': 'all the', 'start': 61.66, 'duration': 0.298, 'append': True},
               {'text': 'STIMULATIONS', 'start': 61.958, 'duration': 0.631},
               {'text': 'Then I can', 'start': 62.589, 'duration': 0.946},
               {'text': 'Then I can', 'start': 63.535, 'duration': 0.94, 'overwrite': True}, # 1.862
@@ -190,8 +189,8 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (prettyPrint, (f"Tangents : {tangent_expr}",), 40.21325), # 40.049
                           (prettyPrint, ("x --> infinity",), 41.526), #40.706
                           (prettyPrint, (f"limit x --> {rand_limit}",), 43.9795), # 43.508
-                          (">>> 'AC' successfully switched to 'DC'", 47.376), # 47.132
-                          (prettyPrint, (f"Current date : {bc} BC\nTarget date : {ad} AD\nSpeed : {c:,} m/s\nEstimated time: {time_sec:.3f}",), 54.91), # 53.226
+                          #(">>> 'AC' successfully switched to 'DC'", 47.376), # 47.132
+                          (prettyPrint, (f"Current date : {bc} BC, Target date : {ad} AD, Speed : {c:,} m/s, Estimated time: {time_sec:.3f}",), 54.91), # 53.226
                           (">>> Time travel successful.", 54.95),
                           (">>> Stimulation : True;", 62.274), # 61.959
                           (prettyPrint, (stimulation,), 62.374),
@@ -264,12 +263,15 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
 
 functions_to_execute = deque([(lay_down, 3.874),
                               (initialization, 10),
+                              (ErrorTerminate, 10.5),
+                              (newWorld, 12.829),
                               (simulation, 14),
+                              (ACDC, 47.13),
                               (blind_my_vision, 48.2),
                               (united, 59.1),
                               (emotions_Enabled, 69.89),
                               (trapped, 73.25),
-                              (imtrapped, 73.35),
+                              (entityTrapped, 73.35),
                               (god_is_always_true, 134),
                               (execute, 192.2),
                               ])
