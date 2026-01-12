@@ -8,6 +8,8 @@ import math
 from utils import Style
 from functions import *
 
+# make random actually random each execution
+random.seed(random.SystemRandom().randint(0, 1_000_000))
 
 def lay_down():
     listx = ["ᛞ", "ᛞᚫ", "ᛞᚫᛉ", "ᛞᚫᛉᚵ", "ᛞᚫᛉᚵᛒ",
@@ -276,7 +278,7 @@ def trapped():
     print(lock)
 
 def eggplant():
-    eggplant = Style.WHITE + """
+    eggplant = Style.PURPLE + """
              =.        
            :--=     
          .+=-*=*    
@@ -294,9 +296,30 @@ def eggplant():
         "itemID": random.randint(1000000, 9999999),
         "objectID": random.randint(100000, 999999),
         "isRipe": random.choice([True, False]),
+        "existence": random.choice(["ERROR", "FATAL ERROR", "OFFLINE", "???"]),
     }
     print(eggplant)
     prettyPrint(description)
+
+def tomato():
+    tomato = Style.RED + f"""
+         
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀               Item
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠻⣶⡆⠀⠿⠀⣶⠒⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   --------------------------
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣴⠾⠛⢹⣶⡤⢶⣿⡟⠶⠦⠄⠀⠀⠀⠀⠀⠀⠀⠀         Name: Tomato
+⠀⠀⠀⠀⠀⣠⣶⣤⣤⣤⣤⣴⠂⠸⠋⢀⣄⡉⠓⠀⠲⣶⣾⣿⣷⣄⠀⠀⠀⠀        foodType: {random.choice(["Fruit", "Vegetable"])},
+⠀⠀⠀⢀⣾⡿⠋⠁⣠⣤⣿⡟⢀⣠⣾⣿⣿⣿⣷⣶⣤⣼⣿⣿⣿⣿⣆⠀⠀⠀       nutritionalValue: {random.randint(30, 600)},
+⠀⠀⠀⣾⡟⠀⣰⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀       itemID: {random.randint(1000000, 9999999)},
+⠀⠀⢸⡿⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀       objectID: {random.randint(100000, 999999)},
+⠀⠀⢸⡇⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀       isRipe: {random.choice([True, False])},
+⠀⠀⢸⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀       existence: {random.choice(["ERROR", "FATAL ERROR", "OFFLINE", "???"])},
+⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀
+⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀
+⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠉⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    """ + Style.RESET
+    print(tomato)
 
 def god_is_always_true():
     os.system("cls")

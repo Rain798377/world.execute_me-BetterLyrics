@@ -12,7 +12,7 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': "And let's begin", 'start': 5.491, 'duration': 0.889}, 
               {'text': 'OBJECT CREATION', 'start': 6.38, 'duration': 1.066, 'scramble': True, 'scramble_time': 0.52},
               {'text': 'Fill in my data', 'start': 7.446, 'duration': 1.774},
-              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True, 'scramble': True, 'scramble_time': 0.82},
+              {'text': 'parameters', 'start': 9.22, 'duration': 0.871, 'append': True,},
               # {'text': 'INITIALIZATION', 'start': 10.091, 'duration': 1.004},
               {'text': 'Set up', 'start': 11.095, 'duration': 1.057}, 
               {'text': 'our new world', 'start': 12.152, 'duration': 0.754, 'append': True},
@@ -72,13 +72,16 @@ transcript = [{'text': 'Switch on the power line', 'start': 0.1, 'duration': 1.6
               {'text': "If", 'start': 74.045, 'duration': 0.415}, # 1.377
               {'text': "I'm", 'start': 74.46, 'duration': 0.45, 'append': True},
               {'text': 'an eggplant', 'start': 74.91, 'duration': 0.512, 'append': True},
-              {'text': 'Then I will give you my',
-                  'start': 75.422, 'duration': 1.537},
+              {'text': 'Then I will give you my', 'start': 75.422, 'duration': 1.537},
               {'text': 'NUTRIENTS', 'start': 76.959, 'duration': 0.617},
-              {'text': "If I'm a tomato", 'start': 77.576, 'duration': 1.65},
+              {'text': "If", 'start': 77.576, 'duration': 0.489}, # 1.65
+              {'text': "I'm", 'start': 78.065, 'duration': 0.606, 'append': True},
+              {'text': 'a tomato', 'start': 78.62, 'duration': 0.555, 'append': True},
               {'text': 'Then I will give you', 'start': 79.226, 'duration': 1.394},
               {'text': 'ANTIOXIDANTS', 'start': 80.62, 'duration': 0.731},
-              {'text': "If I'm a tabby cat", 'start': 81.351, 'duration': 1.482},
+              {'text': "If", 'start': 81.351, 'duration': 0.589}, # 1.482
+              {'text': "I'm", 'start': 81.94, 'duration': 0.33, 'append': True},
+              {'text': 'a tabby cat', 'start': 82.270, 'duration': 0.563, 'append': True},
               {'text': 'Then I will purr for your',
                   'start': 82.833, 'duration': 1.435},
               {'text': 'ENJOYMENT', 'start': 84.268, 'duration': 0.81},
@@ -191,8 +194,8 @@ print_statements = deque([(">>> Powerline : ON", 1.12), # 0.11
                           (prettyPrint, (stimulation,), 62.374),
                           (prettyPrint, (satisfaction), 65.999), # 65.398
                           (prettyPrint, (happiness), 68.21), # 66.602
-                          (">>> NUTRIENTS_TRANSFERED", 76.959),
-                          (">>> ANTIOXIDANTS_TRANSFERED", 80.631),
+                          ("""[COMMAND] you.add_attribute(from=self, obj="NUTRIENTS")""", 76.959),
+                          ("""[COMMAND] you.add_attribute(from=self, obj="ANTIOXIDANTS")""", 80.631),
                           (">>> ENJOYMENT_PROVIDED", 84.269),
                           (">>> World.announce('I exist because of you.')", 87.923),
                           (">>> Gender successfully set to 'F'\n>>> Gender successfully set to 'M'", 90.198),
@@ -268,6 +271,7 @@ functions_to_execute = deque([(lay_down, 3.874),
                               (trapped, 73.25),
                               (entityTrapped, 73.35),
                               (eggplant, 75),
+                              (tomato, 78.82),
                               (god_is_always_true, 134),
                               (execute, 192.2),
                               ])

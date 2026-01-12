@@ -5,10 +5,8 @@ import time
 import ast
 import math
 
-
-
-import json
-import ast
+# make random actually random each execution
+random.seed(random.SystemRandom().randint(0, 1_000_000))
 
 def prettyPrint(*args):
     """
