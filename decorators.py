@@ -134,7 +134,7 @@ def united():
     NewWorld = True
     current = random.choice(["AC", "DC"])
 
-    united = prettyPrint(f"united : {united1};, objectCreated : {objectCreated}, parameter : {parameter}, NewWorld : {NewWorld}, current : {current}")
+    united = prettyPrint(f"united : {united1};, objectCreated : {objectCreated}, parameter : {parameter}, newWorld : {NewWorld}, current : {current}")
     computed1 = prettyPrint(f"computed : {computed}")
     print(united, computed1)
 
