@@ -7,7 +7,16 @@
 ---
 
 # Description
-A python project that plays the song `world.execute(me);`<sub>[1](#link1)</sub> by `ProjectMili`<sub>[2](#link2)</sub>. The lyric syncing project<sub>[3](#link3)</sub> was originally created by `AlipDotPY`<sub>[4](#link4)</sub>. However, the lyric timing is inconsitent since it used ```time.sleep(#)```. 1 year and 2 months later, `Postigic`<sub>[5](#link5)</sub> fixed the problem and implemented a custom function that is very clean.<sub>[6](#link6)</sub>
+A python project that plays the song `world.execute(me);`<sub>[1](#link1)</sub> by `ProjectMili`<sub>[2](#link2)</sub>. The lyric syncing project<sub>[3](#link3)</sub> was originally created by `AlipDotPY`<sub>[4](#link4)</sub>. However, the lyric timing is inconsitent since it used ```time.sleep(#)```. 1 year and 2 months later, `Postigic`<sub>[5](#link5)</sub> fixed the problem and implemented a custom function that is very clean.<sub>[6](#link6)</sub> I'm just making the lyrics more fancier.
+
+---
+
+# Install
+To install:
+```bash
+pip install -r requirements.txt
+```
+
 
 
 
