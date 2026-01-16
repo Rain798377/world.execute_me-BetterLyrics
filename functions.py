@@ -67,10 +67,10 @@ def prettyPrint(*args):
 
 
 
-# Generate plotted points
+
 plotted_points = ", ".join(f"x={round(random.uniform(-2, 4),1)}, y={round(random.uniform(-2, 4),1)}" for _ in range(3))
 
-# Generate 2 random dimension set points
+
 dimension_set_points = ", ".join(f"x={round(random.uniform(-2, 2),1)}, y={round(random.uniform(2, 4),1)}" for _ in range(2))
 
 # Circle parameters
@@ -92,19 +92,18 @@ tangent_frequency = round(random.uniform(1, 6),2)
 tangent_phase = round(random.uniform(-3, 3),2)
 tangent_expr = f",dy/dx = {tangent_amplitude} * cos({tangent_frequency}x {tangent_phase:+}) * {tangent_frequency}, amplitude = {tangent_amplitude}, frequency = {tangent_frequency}, phase = {tangent_phase}"
 
-# Tangent (derivative-like) callable
+# Tangent
 tangent = lambda x: tangent_amplitude * tangent_frequency * math.cos(
     tangent_frequency * x + tangent_phase
 )
 
 
-# Compute derived values for the generated shapes/functions
+
 circle_area = math.pi * r * r
-# Choose a point on the circle at angle 0 (to the right of center) and verify equation
+
 point_on_circle = (round(cx + r, 6), round(cy, 6))
 circle_eq_value = (point_on_circle[0] - cx) ** 2 + (point_on_circle[1] - cy) ** 2
 
-# Define sine function and sample both sine and tangent at a few x values
 sine = lambda x: amplitude * math.sin(frequency * x + phase_shift)
 sample_xs = [0, 1, 2]
 sine_samples = {x: round(sine(x), 6) for x in sample_xs}
@@ -132,25 +131,18 @@ rand_limit = random.randint(100, 500)
 c = 299_792_458  
 
 def random_years():
-    # Random BC year between 1000 BC and 1 BC
     bc_year = random.randint(1, 1000)
-    # Random AD year between 1 AD and 3000 AD
     ad_year = random.randint(1, 3000)
     return bc_year, ad_year
 
 def time_to_travel(bc_year, ad_year, speed):
-    # Convert years to seconds assuming 1 year = 365.25 days
-    years_diff = ad_year + bc_year  # BC to AD crossing
+    years_diff = ad_year + bc_year 
     seconds = years_diff * 365.25 * 24 * 60 * 60
-    # Distance = speed * time, so time = distance / speed
-    # Let's assume distance = years_diff in light-years converted to meters
-    # 1 light-year = speed_of_light * 1 year
     distance_m = years_diff * c * 365.25 * 24 * 60 * 60
     time_seconds = distance_m / speed
     return time_seconds
 # Random years
 bc, ad = random_years()
-# Compute time at speed of light
 time_sec = time_to_travel(bc, ad, c)
 
 stimulation = "Stimulation:, --- INITIATED---, Stimulation_status : True;, Stimulation : 100%"

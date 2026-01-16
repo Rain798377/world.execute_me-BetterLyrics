@@ -47,7 +47,7 @@ def initialization():
 
 
 def simulation():
-    time.sleep(0.05)  # slight delay before starting
+    time.sleep(0.05) 
     #for char in Style.GREEN + "\n\n ***************************************** \n ":
     #    print(char, end="", flush=True)
     obj = Style.GREEN + """
@@ -82,14 +82,14 @@ ________________________________________________________________________________
     print(obj)
     #for char in obj:
     #    print(char, end="", flush=True)
-    #    time.sleep(0.002)  # small typing effect
+    #    time.sleep(0.002)  
 
-    total_steps = 69           # number of characters in the bar
-    total_duration = 29-14.888      # default total time in seconds for progress 0->100%
+    total_steps = 69           
+    total_duration = 29-14.888      
     step_delay = total_duration / total_steps
-    refresh_rate = 0.02        # refresh speed (characters flicker)
+    refresh_rate = 0.02        
 
-    phrases = [ # same length for alignment
+    phrases = [ 
         "Adding 'You' and 'Me'    ",
         "Generating the Universe  ",
         "Adding Stars and Moons.. ",
@@ -99,27 +99,25 @@ ________________________________________________________________________________
 
     progress = 0
     last_update = time.time()
-    current_phrase = random.choice(phrases)  # pick phrase for this step
+    current_phrase = random.choice(phrases)
 
     while progress <= total_steps:
         now = time.time()
-        # Increment progress every step_delay seconds
         if now - last_update >= step_delay:
             progress += 1
             last_update = now
-            current_phrase = random.choice(phrases)  # update phrase only on progress step
+            current_phrase = random.choice(phrases)
 
-        # --- Build bar ---
-        # Only the filled portion flickers
+
         filled = ''.join(random.choice(ascii_chars) for _ in range(progress))
         empty = '-' * (total_steps - progress)
         bar = filled + empty
-        percent = math.ceil(progress * 100 / total_steps)  # calculate once per step
+        percent = math.ceil(progress * 100 / total_steps)
 
-        sys.stdout.write(f"\r{current_phrase} [{bar}] {percent}%          ") # add spaces to clear line
+        sys.stdout.write(f"\r{current_phrase} [{bar}] {percent}%          ")
         sys.stdout.flush()
 
-        # Refresh faster than progress increment for flicker effect
+
         time.sleep(refresh_rate)
 
 
@@ -149,9 +147,9 @@ def imtrapped(): # fallback function
     trapped = """Status : --- LOG ---,"I'm" entity trapped : True;, Simulation_status : ENABLED;"""
     prettyPrint(trapped)
 
-def entityTrapped(): # improved function fake error message
-    line_number1 = lambda: random.randint(10, 120) # Line Number
-    line_number_loop1 = random.randint(10, 120) # Line Number for loop
+def entityTrapped():
+    line_number1 = lambda: random.randint(10, 120)
+    line_number_loop1 = random.randint(10, 120) 
     trapped = Style.RED + f"""
 Traceback (most recent call last):
   File "world.py", line {line_number1()}, in execute
@@ -252,7 +250,6 @@ def ACDC():
         "---------------Converted AC to DC---------------",
     ]
 # 0.542/11 = 0.0492 seconds per step approximately
-# Animate all except the last step
     for step in ACDC[:-1]:
         print(step, end='\r')
         sys.stdout.flush()
